@@ -47,8 +47,9 @@ This workflow helps candidates automatically tailor their resumes to specific jo
 
 1. Clone this repository.  
 2. Import the provided workflow JSON into your **n8n instance**.  
-3. Configure your **Google Gemini API credentials** in n8n.  
-4. Run the workflow and provide the required inputs.  
+3. Configure your **Google Gemini API credentials** and **customjs api** in n8n.
+4. Also download this community node - npm i @custom-js/n8n-nodes-pdf-toolkit  
+5. Run the workflow and provide the required inputs.  
 
 ---
 
