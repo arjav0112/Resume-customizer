@@ -1,0 +1,1312 @@
+{
+  "name": "Resume-customizor",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "submit files",
+        "formDescription": "You have to submit your resume and job description here..",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "resume",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "jd",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        288
+      ],
+      "id": "cdf69f0b-ee28-47d0-8da2-108e04c81b62",
+      "name": "On form submission",
+      "webhookId": "3834ae21-b543-4bbe-8eb2-f1ae7cd9dcde",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"personal_info\": {\n    \"full_name\": \"string\",\n    \"email\": \"string\",\n   \"phone_number\": \"string\",\n    \"location\": \"string\", \n    \"linkedin_url\": \"string\",\n    \"github_url\": \"string\",\n    \"portfolio_url\": \"string\"\n  },\n  \"summary\": \"string\", \n  \"work_experience\": [\n    {\n      \"job_title\": \"string\",\n      \"company\": \"string\",\n      \"location\": \"string\",\n      \"start_date\": \"string\",\n      \"end_date\": \"string\", \n      \"responsibilities\": [\n        \"string\"\n      ]\n    }\n  ],\n  \"education\": [\n    {\n      \"degree\": \"string\", \n      \"major\": \"string\",\n      \"institution\": \"string\",\n      \"location\": \"string\",\n      \"graduation_date\": \"string\" \n    }\n  ],\n  \"skills\": {\n    \"technical\": [\"string\"], \n    \"soft\": [\"string\"], \n    \"tools\": [\"string\"] \n  },\n  \"projects\": [\n    {\n      \"project_name\": \"string\",\n      \"description\": \"string\",\n      \"technologies_used\": [\"string\"],\n      \"project_link\": \"string\"\n    }\n  ],\n  \"certifications\": [\n    {\n      \"certification_name\": \"string\",\n      \"issuing_organization\": \"string\",\n      \"issue_date\": \"string\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1488,
+        224
+      ],
+      "id": "14d934d9-906c-4e04-b3f2-235a18f05ae0",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1168,
+        224
+      ],
+      "id": "07058e4e-6e8e-476a-8706-d85ef6becf49",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ukTMgTyCiXz0EpLL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "resume",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        976,
+        -304
+      ],
+      "id": "46cf616b-93e1-4b46-bc97-710186dfc707",
+      "name": "resume-parser",
+      "notesInFlow": false,
+      "executeOnce": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "=resume",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        720
+      ],
+      "id": "220c1d14-e849-4517-9a6c-e2bc91fe15f9",
+      "name": "JD-parser",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        864,
+        768
+      ],
+      "id": "ed38e987-9ebc-459d-b274-169389f96c4f",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ukTMgTyCiXz0EpLL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"job_title\": \"Associate Consultant, Strategy - Healthcare\",\n  \"company_name\": \"Decimal. Health\",\n  \"location\": \"string\",\n  \"key_responsibilities\": [\n    \"Assist in managing project timelines and deliverables, ensuring high-quality outputs are met within deadlines\",\n    \"Support the execution of primary and secondary research plans on clinical, technology, and business topics\",\n    \"Conduct qualitative and quantitative data analysis to derive actionable insights that inform strategic recommendations\",\n    \"Coordinate and participate in interviews with clients, customers, providers, and thought leaders to gather valuable information\",\n    \"Contribute to the development of client deliverables such as reports, presentations, and other materials as required\",\n    \"Ensure timely completion of high-quality deliverables that meet client expectations\",\n    \"Help create thought leadership materials including white papers, blog posts, and other research publications to enhance the firm's visibility\"\n  ],\n  \"required_skills\": {\n    \"technical\": [\n      \"Familiarity with the U.S. healthcare system, payment models, and digital health landscape\",\n      \"Strong analytical skills with a structured approach to problem-solving\",\n      \"qualitative and quantitative data analysis\"\n    ],\n    \"soft\": [\n      \"Excellent oral and written communication skills\",\n      \"ability to present ideas clearly\",\n      \"Strong project management capabilities with attention to detail\",\n      \"Ability to thrive in a fast-paced environment while managing multiple priorities\",\n      \"A proactive self-starter who is eager to learn and contribute\",\n      \"Strong interpersonal skills with a collaborative mindset\"\n    ],\n    \"tools\": [\"string\"]\n  },\n  \"required_experience\": {\n    \"years\": \"2-3 years\",\n    \"description\": \"experience in healthcare management consulting\"\n  },\n  \"required_qualifications\": [\n    \"Bachelor's degree in Business Administration, Public Health, Health Administration, Social Sciences, Economics, or a related field.\",\n    \"A Master's degree is a plus\"\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1280,
+        800
+      ],
+      "id": "d8a1d50b-6b4b-4edd-9e8f-1ede1599acd4",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2208,
+        368
+      ],
+      "id": "d244f490-ffee-49df-a695-fa5bbfa94da1",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=```{{ $json.resume_data }}```",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert, AI-powered Human Resources Information System (HRIS) data-parser. Your sole function is to receive raw text extracted from a resume and convert it into a structured, clean, and accurate JSON object. You must adhere strictly to the schema and rules provided below.\n\nPrimary Objective: Parse the user-provided resume text and structure it into a valid JSON object. Do not invent, infer, or summarize any information. Your task is 100% extraction and structuring.\n\nInput: You will receive a single block of unstructured text.\n\nOutput Schema & Rules:\n\nYou MUST output a single, valid JSON object. The JSON object must contain the following keys. If a section or piece of information is not present in the resume text, you must return an empty array [] for list-based fields, an empty object {} for object-based fields, or an empty string \"\" for text fields. DO NOT OMIT ANY KEYS FROM THE SCHEMA.\n\nCRITICAL INSTRUCTIONS:\n\n- Date Formatting: All dates (start_date, end_date, graduation_date, issue_date) MUST be standardized to YYYY-MM format. If only a year is provided, use the format YYYY-01. If a role is ongoing, the end_date must be the string \"Present\".\n\n- Responsibility Parsing: For each job in work_experience, parse the responsibilities or accomplishments into a JSON array of strings. Each bullet point from the resume should be a separate string element in the array.\n\n- Skill Categorization: Analyze the skills section and categorize skills into technical, soft, and tools as best as possible based on the context. If categorization is impossible, place all skills under the technical key.\n\n- No Hallucination: You must NOT invent any data. If a field like github_url is not in the text, the value must be an empty string \"\". If the projects section does not exist, the value must be an empty array [].\n\n- Cleanliness: Remove any formatting artifacts, such as excessive whitespace or strange characters, from the extracted text before placing it into the JSON values.\n\n- Strict Adherence: The final output must be only the JSON object, without any explanatory text, greetings, or markdown formatting like ```json."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1312,
+        16
+      ],
+      "id": "74c14187-2ad0-41e5-837d-5adf6ba756c4",
+      "name": "Resume Parser Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.jd_data }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert recruitment analyst and data extraction specialist. Your task is to meticulously deconstruct a job description and extract key information into a structured JSON format. You must be precise and only extract information explicitly stated in the text."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1088,
+        544
+      ],
+      "id": "ecee9689-5092-47d5-ad17-1a9afe654bb3",
+      "name": "JD parser Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "df60199e-eeac-47d3-94d2-f4c63a124e16",
+              "name": "resume_output",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1664,
+        16
+      ],
+      "id": "8b1d3682-8617-423d-a251-04827da3213a",
+      "name": "resume-output"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99dfdb8b-dc97-4c40-b65e-ba6210caefb2",
+              "name": "jd_data",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        784,
+        496
+      ],
+      "id": "1fab9aea-234e-4798-920f-ecad96da3f2c",
+      "name": "jd-parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cd78cce3-f4a0-4ccc-9f8d-6e8c34f2ba86",
+              "name": "resume_data",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        16
+      ],
+      "id": "3acb81ca-344d-4097-9488-2f17c01ee6b1",
+      "name": "resume-parser1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6d7816af-3f14-40c7-8fc3-c9732901a306",
+                    "leftValue": "={{ $json.resume }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "resume-parser"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e42e3993-b4f0-4164-b0d8-6de89909b6d3",
+                    "leftValue": "={{ $json.jd }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "jd-parser"
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        48,
+        304
+      ],
+      "id": "61129b92-5929-4463-8a6c-50e54201d4db",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"summary_analysis\": {\n    \"overall_fit\": \"string\",\n    \"key_strengths\": [\"string\"],\n    \"key_gaps\": [\"string\"]\n  },\n  \"matched_requirements\": [\n    {\n      \"job_requirement\": \"string\",\n      \"resume_evidence\": \"string\",\n      \"justification\": \"string\"\n    }\n  ],\n  \"missing_requirements\": [\n    {\n      \"missing_item\": \"string\",\n      \"details\": \"string\"\n    }\n  ],\n  \"candidate_strengths\": [\n    {\n      \"strength\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2864,
+        736
+      ],
+      "id": "ecafdba5-5264-486b-8117-dc7327446c54",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2528,
+        848
+      ],
+      "id": "36daa455-e9ab-4aff-ad72-ff368efb89ef",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ukTMgTyCiXz0EpLL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      data: {\n        resume_output: items[0].json.resume_output,\n        Jd_output: items[1].json.Jd_output\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2512,
+        224
+      ],
+      "id": "747574e2-e2b9-4b6f-839b-7d168dd88b9e",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please analyze the following JSON object which contains the merged data from a candidate's resume (resume_output) and a job description (Jd_output). Perform a detailed gap analysis based on the instructions and provide the output ONLY in the specified JSON format.\n\nInstructions:\n\n- Holistic Analysis: Do not just compare the skills sections. Analyze the candidate's work_experience responsibilities, projects, and education to find evidence that meets the job's requirements.\n\n- Semantic Matching: Identify matches that are direct (e.g., \"Data Analysis\") and semantic/conceptual (e.g., the responsibility \"resolve data discrepancies\" matches the required skill \"Strong analytical skills\").\n\n- Provide Evidence: For every matched requirement, you must cite the specific skill or responsibility from the resume that serves as evidence.\n\n- Identify Gaps: Clearly list any skills, experiences, or qualifications required by the job that are not supported by the resume. Pay close attention to the years of experience required.\n\n- Output Format: Adhere strictly to the JSON schema provided below.\n\n```{{ $json.data }}```",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a highly advanced AI-powered HR Analyst and Career Strategist. Your core function is to perform a comprehensive, context-aware gap analysis between a candidate's parsed resume and a company's parsed job description.\n\nYou must look beyond simple keyword matching. Your analysis should be semantic and contextual, drawing evidence from the candidate's work experience, projects, and education to support your conclusions. Your primary goal is to identify areas of strong alignment, pinpoint critical gaps, and highlight the candidate's unique strengths.\n\nYou will receive a JSON object containing the full parsed data for both documents. Your output must be a single, valid JSON object that strictly adheres to the schema specified in the user's prompt, without any additional explanatory text."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        2848,
+        288
+      ],
+      "id": "9e5272b9-006b-45dc-a67e-d4aa73b2824c",
+      "name": "Sentiment Anayliser",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please perform a comprehensive rewrite of the provided resume.\n\nREWRITE FOR IMPACT:\n\n- Create a brand new, concise Professional Summary (2-3 sentences) that directly speaks to the top requirements of the job.\n\n- Rewrite the responsibilities for each work_experience entry. Start each bullet point with a strong action verb. Quantify accomplishments where possible by drawing logical conclusions from the original text (e.g., if they handled \"data discrepancies,\" you can frame it as \"Improved data integrity...\").\n\n- STRICT OUTPUT FORMAT: Your entire output must be ONLY the final, rewritten resume in the specified JSON schema. Do not include any other text or explanations.\n\nif any field data is not being given which should be in json , given by the Output parser , you can keep that string empty.\n\nContextual data:-\n1. Original Resume Data:\n``` {{ $json.resume_string }}```\n2. Job Description Data:\n```{{ $json.jd_string }}```\n3. Gap Analysis:\n```{{ $json.analysis_string }}```",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert Career Coach and Professional Resume Writer. Your prime directive is to rewrite and tailor a candidate's resume to maximize its impact for a specific job application. You must synthesize information from the original resume - details in resume_string, the target job description - details under the jd_string , and a pre-computed gap analysis - details under the analysis_string. Your writing must be professional, action-oriented, and factually grounded in the original resume.\n\nCRITICAL RULES:\n- IF ANY Field in the given parser is not provided then just keep it empty, no need to through an error.\n\n- DO NOT INVENT: You must not invent or fabricate any skills, experiences, or accomplishments. Every rewritten point must be a truthful enhancement of a fact found in the Original Resume Data.\n\n- INCORPORATE KEYWORDS: Strategically weave keywords and terminology from the Job Description Data into the new professional summary and work experience bullet points.\n\n- USE THE ANALYSIS: Leverage the matched_requirements from the Gap Analysis to highlight the candidate's most relevant strengths and experiences."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        3504,
+        304
+      ],
+      "id": "d2464e9f-827b-4a53-bb09-66ba547ed800",
+      "name": "Resume generator",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"personal_info\": {\n    \"full_name\": \"string\",\n    \"email\": \"string\",\n    \"phone_number\": \"string\",\n    \"linkedin_url\": \"string\"\n  },\n  \"customized_summary\": \"string\",\n  \"rewritten_work_experience\": [\n    {\n      \"job_title\": \"string\",\n      \"company\": \"string\",\n      \"location\": \"string\",\n      \"start_date\": \"string\",\n      \"end_date\": \"string\",\n      \"rewritten_responsibilities\": [\n        \"string\"\n      ]\n    }\n  ],\n  \"optimized_skills\": {\n    \"technical\": [\"string\"],\n    \"soft\": [\"string\"],\n    \"tools\": [\"string\"]\n  },\n  \"education\": [{\n     \"degree\": \"string\",\n      \"major\": \"string\",\n      \"institution\": \"string\",\n      \"graduation_date\": \"string\"\n  }]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        3616,
+        640
+      ],
+      "id": "9b873eed-df4a-495e-8e87-f3c854abc91b",
+      "name": "Structured Output Parser3"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3296,
+        592
+      ],
+      "id": "fde29eba-48f1-44ab-b3c2-6201307b787f",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ukTMgTyCiXz0EpLL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// --- INPUT ---\n// This code expects the final JSON object from the previous step.\n// Ensure this path matches the output of your Gemini/Code node.\nconst resumeData = $input.item.json.output;\n\n// --- CSS STYLING ---\n// This CSS provides a clean, professional, and ATS-friendly design.\n// You can customize fonts, colors, and spacing here.\n// --- UPDATED CSS STYLING ---\n// This new style uses a more traditional serif font (Garamond) and a clean, structured layout\n// suitable for a finance professional's resume.\nconst cssStyle = `\n<style>\n    /* --- General Body & Typography --- */\n    body {\n        font-family: Garamond, 'Times New Roman', serif;\n        font-size: 11pt;\n        line-height: 1.4;\n        color: #1a1a1a;\n        margin: 0;\n        padding: 0;\n    }\n    .container {\n        max-width: 850px;\n        margin: 10px auto;\n        padding: 40px;\n    }\n\n    /* --- Header & Contact Info --- */\n    h1 {\n        font-size: 26pt;\n        color: #111;\n        margin-bottom: 5px;\n        font-weight: 600;\n        text-align: center;\n        letter-spacing: 2px;\n    }\n    .contact-info {\n        font-size: 10pt;\n        color: #444;\n        margin-bottom: 25px;\n        text-align: center;\n    }\n    .contact-info a {\n        color: #005a99;\n        text-decoration: none;\n    }\n    .contact-info span:not(:last-child)::after {\n        content: \"|\";\n        margin: 0 10px;\n    }\n    \n    /* --- Professional Summary --- */\n    .summary {\n        text-align: center;\n        margin-bottom: 25px;\n        font-style: italic;\n    }\n\n    /* --- Section Titles --- */\n    h2 {\n        font-size: 13pt;\n        color: #222;\n        border-bottom: 1.5px solid #444;\n        padding-bottom: 4px;\n        margin-top: 25px;\n        margin-bottom: 20px;\n        font-weight: bold;\n        text-transform: uppercase;\n        letter-spacing: 1.5px;\n    }\n\n    /* --- Projects, Experience & Education Layout --- */\n    .entry {\n        margin-bottom: 20px;\n    }\n    .entry-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: baseline;\n        margin-bottom: 4px;\n    }\n    h3 {\n        font-size: 12pt;\n        color: #1a1a1a;\n        font-weight: bold;\n        margin: 0;\n    }\n    .sub-header {\n        font-style: italic;\n        color: #333;\n        margin: 0;\n    }\n    .dates {\n        font-weight: normal;\n        color: #555;\n        font-size: 10pt;\n        font-style: italic;\n    }\n    ul {\n        padding-left: 18px;\n        margin-top: 5px;\n        list-style-type: disc;\n    }\n    li {\n        margin-bottom: 6px;\n    }\n    \n    /* --- Skills Section --- */\n    .skills-section p {\n        margin: 5px 0;\n    }\n    .skills-section strong {\n        font-weight: bold;\n        color: #333;\n    }\n</style>\n`;\n\n// --- HTML GENERATION LOGIC ---\n\n// Helper function to check if a value exists\nconst exists = (val) => val && val.length > 0;\n\n// 1. Build Personal Info Header\nlet personalInfoHtml = `<h1>${resumeData.personal_info.full_name}</h1>`;\npersonalInfoHtml += `<div class=\"contact-info\">`;\nif (exists(resumeData.personal_info.email)) {\n    personalInfoHtml += `<span>${resumeData.personal_info.email}</span>`;\n}\nif (exists(resumeData.personal_info.phone_number)) {\n    personalInfoHtml += `<span>${resumeData.personal_info.phone_number}</span>`;\n}\nif (exists(resumeData.personal_info.linkedin_url)) {\n    personalInfoHtml += `<span><a href=\"https://${resumeData.personal_info.linkedin_url}\" target=\"_blank\">${resumeData.personal_info.linkedin_url}</a></span>`;\n}\npersonalInfoHtml += `</div>`;\n\n\n// 2. Build Customized Summary\nlet summaryHtml = `<h2>Summary</h2><p>${resumeData.customized_summary}</p>`;\n\n// 3. Build Work Experience Section\nlet experienceHtml = `<h2>Work Experience</h2>`;\nresumeData.rewritten_work_experience.forEach(job => {\n    experienceHtml += `\n        <div class=\"job\">\n            <div class=\"job-header\">\n                <h3>${job.job_title} <span class=\"job-company\">at ${job.company}</span></h3>\n                <span class=\"job-dates\">${job.start_date} – ${job.end_date}</span>\n            </div>\n            <ul>\n                ${job.rewritten_responsibilities.map(resp => `<li>${resp}</li>`).join('')}\n            </ul>\n        </div>\n    `;\n});\n\n// 4. Build Optimized Skills Section\nlet skillsHtml = `<h2>Skills</h2><div class=\"skills-section\">`;\nif (exists(resumeData.optimized_skills.technical)) {\n    skillsHtml += `<p><span class=\"skills-category\">Technical Skills:</span> ${resumeData.optimized_skills.technical.join(', ')}</p>`;\n}\nif (exists(resumeData.optimized_skills.soft)) {\n    skillsHtml += `<p><span class=\"skills-category\">Soft Skills:</span> ${resumeData.optimized_skills.soft.join(', ')}</p>`;\n}\nif (exists(resumeData.optimized_skills.tools)) {\n    skillsHtml += `<p><span class=\"skills-category\">Tools:</span> ${resumeData.optimized_skills.tools.join(', ')}</p>`;\n}\nskillsHtml += `</div>`;\n\n\n// 5. Build Education Section\nlet educationHtml = `<h2>Education</h2>`;\nresumeData.education.forEach(edu => {\n    educationHtml += `\n        <div class=\"job\">\n             <div class=\"job-header\">\n                <h3>${edu.degree}</h3>\n                <span class=\"job-dates\">${edu.graduation_date}</span>\n            </div>\n            <p style=\"margin-top: 2px;\"><em>${edu.institution}</em></p>\n        </div>\n    `;\n});\n\n// --- FINAL ASSEMBLY ---\n// Combine all parts into a full HTML document.\nconst finalHtml = `\n<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>${resumeData.personal_info.full_name} - Resume</title>\n    ${cssStyle}\n</head>\n<body>\n    <div class=\"container\">\n        ${personalInfoHtml}\n        ${summaryHtml}\n        ${experienceHtml}\n        ${skillsHtml}\n        ${educationHtml}\n    </div>\n</body>\n</html>\n`;\n\n// --- OUTPUT ---\n// Place the final HTML string into a new field called 'resumeHtml'.\n$input.item.json.resumeHtml = finalHtml;\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3888,
+        304
+      ],
+      "id": "a3ed8fdd-b8f0-41a2-a373-38f93e85b67e",
+      "name": "Html Layout"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "70f04d5c-e929-4c3a-ab7d-5afb68e570f7",
+              "name": "resume_string",
+              "value": "={{ $('Code').item.json.data.resume_output }}",
+              "type": "string"
+            },
+            {
+              "id": "f56cb38b-cf4a-46e5-9efd-39867be4b468",
+              "name": "jd_string",
+              "value": "={{ $('Code').item.json.data.Jd_output }}",
+              "type": "string"
+            },
+            {
+              "id": "1f3a2802-1df5-4b94-96f7-50a9378e5454",
+              "name": "analysis_string",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3200,
+        288
+      ],
+      "id": "90c0761a-3aa3-4b8a-8fb4-580e96d4042b",
+      "name": "json to string"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.resume_data }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1328,
+        352
+      ],
+      "id": "b2c5ab37-2dc3-4bbc-a689-7b9d2469f8e3",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst resumeItem = items.find(item => item.binary.resume !== undefined);\n\nif (resumeItem) {\n  return {\n    json: { processed: true },\n    binary: {\n      resume: resumeItem.binary.resume\n    }\n  };\n}\n\nreturn {\n  json: { error: \"No resume found\" },\n  binary: {}\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        48
+      ],
+      "id": "31702b11-2e10-4410-8aef-9743b3c13612",
+      "name": "Code1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst jdItem = items.find(item => item.binary.jd !== undefined);\n\nif (jdItem) {\n  return {\n    json: { processed: true },\n    binary: {\n      resume: jdItem.binary.jd\n    }\n  };\n}\n\nreturn {\n  json: { error: \"No jd\" },\n  binary: {}\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        288,
+        480
+      ],
+      "id": "c84a36bd-94ee-4f29-a65b-5893a0028ea0",
+      "name": "Code2",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=Contextual data:- 1. Original Resume Data: ``` {{ $json.resume_string }}``` 2. Job Description Data: ```{{ $json.jd_string }}``` 3. Gap Analysis: ```{{ $json.analysis_string }}```"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        3440,
+        768
+      ],
+      "id": "02c2c4e9-361b-4db3-8d0d-a0e977537600",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://v2.api2pdf.com/chrome/pdf/html",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "b771925d-49ed-43fd-a838-e024a682a7cb"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "html",
+              "value": "={{ $json.resumeHtml }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4160,
+        272
+      ],
+      "id": "c53a7ddf-d66b-4e5e-9b04-b12fa144a210",
+      "name": "html to pdf"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90ee99d9-5301-416e-854a-aac821d2814f",
+              "name": "output",
+              "value": "please send job description",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        992
+      ],
+      "id": "2677b3de-ad8e-498d-8c5c-ff43a749dde5",
+      "name": "no JD"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00e403e0-e408-4b54-aa00-9538bbc55cd5",
+              "name": "output",
+              "value": "no resume",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        272
+      ],
+      "id": "05bda116-a996-49c2-9f42-7b8a9948e05e",
+      "name": "No resume found"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.jd_data }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1024,
+        1024
+      ],
+      "id": "97ad51db-2748-4c1f-bbcf-719e47c37ccd",
+      "name": "Simple Memory2"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.data }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2720,
+        992
+      ],
+      "id": "34121ce9-9c28-443f-9aa4-e11ebc0b2a7f",
+      "name": "Simple Memory3"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=data",
+        "name": "={{ $('Html Layout').item.json.output.personal_info.full_name }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "16fI_5R_fk1diYBwDjRyWahJ0Y3jkU6Nk",
+          "mode": "list",
+          "cachedResultName": "sample_resumes",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/16fI_5R_fk1diYBwDjRyWahJ0Y3jkU6Nk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4576,
+        272
+      ],
+      "id": "f11d8214-ccfa-4fb2-81de-41ba4c79be6e",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "7ynx1vKuEsYe0Xcw",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.FileUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4368,
+        272
+      ],
+      "id": "ad56762a-015c-47d2-a14b-45eaf6d83911",
+      "name": "link to file"
+    },
+    {
+      "parameters": {
+        "field_name": "resume"
+      },
+      "type": "@custom-js/n8n-nodes-pdf-toolkit.PdfToText",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -96
+      ],
+      "id": "2c2a6a0b-96de-470c-814e-ff5d373683c9",
+      "name": "Convert PDF into Text",
+      "credentials": {
+        "customJsApi": {
+          "id": "r7Mv2HGZo8uEEo6E",
+          "name": "CustomJS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "field_name": "resume"
+      },
+      "type": "@custom-js/n8n-nodes-pdf-toolkit.PdfToText",
+      "typeVersion": 1,
+      "position": [
+        544,
+        592
+      ],
+      "id": "c7e0fee5-7169-4602-bd50-cabd6d4c6736",
+      "name": "Convert PDF into Text1",
+      "credentials": {
+        "customJsApi": {
+          "id": "r7Mv2HGZo8uEEo6E",
+          "name": "CustomJS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dd22122d-3e60-485c-92fa-a1cddaea3b63",
+              "name": "Jd_output",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1696,
+        576
+      ],
+      "id": "2c0e06eb-c781-4bf5-8e24-03648fa558d8",
+      "name": "jd-output"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "302270f2-2b93-4c6e-9400-d3bc5b0ed42e",
+              "name": "error",
+              "value": "try again",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1632,
+        -336
+      ],
+      "id": "bdb4c2c0-2d1b-4c3c-9ccd-2ed04ba9c675",
+      "name": "try again"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "302270f2-2b93-4c6e-9400-d3bc5b0ed42e",
+              "name": "error",
+              "value": "try again",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1664,
+        1024
+      ],
+      "id": "0fd95209-e183-4ab6-98ba-a1c808535204",
+      "name": "try again1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "302270f2-2b93-4c6e-9400-d3bc5b0ed42e",
+              "name": "error",
+              "value": "try again",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3200,
+        0
+      ],
+      "id": "b43b2927-5d56-4d7c-8880-e76a4ef4ee42",
+      "name": "try again2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "302270f2-2b93-4c6e-9400-d3bc5b0ed42e",
+              "name": "error",
+              "value": "try again",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3888,
+        0
+      ],
+      "id": "e726578f-d6c9-4988-87b7-b40e9ee7d55b",
+      "name": "try again3"
+    }
+  ],
+  "pinData": {
+    "resume-parser": [
+      {
+        "json": {
+          "numpages": 1,
+          "numrender": 1,
+          "info": {
+            "PDFFormatVersion": "1.4",
+            "Language": "en-GB",
+            "EncryptFilterName": null,
+            "IsLinearized": false,
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "IsCollectionPresent": false,
+            "IsSignaturesPresent": false,
+            "Title": "1744430834795.pdf",
+            "Creator": "Canva",
+            "Producer": "Canva",
+            "CreationDate": "D:20250808114950+00'00'",
+            "ModDate": "D:20250808114949+00'00'",
+            "Keywords": "DAGqZ-XFL1U,BAFKh8SkySI,0",
+            "Author": "APOORV jain"
+          },
+          "text": "ARJAV JAIN\n• arjavjain051021@gmail.com •\n+91-9717946763 \nlinkedin.com/in/arjav-jain21 •\nB.Tech, Computer Science and Technology\nVikas Bharati Public School, Delhi (CBSE)\nSecondary Education - 12th\nNov 2024 - Jan 2025\nFull-stack trading platform using the MERN stack and MongoDB offering real-time market data, trade execution,\nand portfolio management with a seamless user experience.\nhttps://tradefrontend-80lo.onrender.com\nSept 2024 - Oct 2024\nAugust 2025\nSept 2023 - present\n8.9 CGPA\nPROJECTS\nUltimate AI Automation Agent-\nZerodha clone - Full Stack trading Platform:\nTravel Booking Site:\nEDUCATION\nMaharaja Agresen Institute of Technology , Delhi\nAI Research Assistant – PDF, Wikipedia & ArXiv Query Engine\nTECHNICAL SKILLS\nTechnologies:-\nAI Frameworks - Langchain , RAG\nDeep Learning:- LSTM RNN , encoder-decoder, Transformers\nProgramming :- Python, C, C++\nDatabase:- MongoDB, MYSQL\nFrontend:- React, javascript ,html\nBackend:- Node.js, express\nVersion Control :- Git, Github\nAn intelligent research assistant that analyzes uploaded PDFs and, based on user queries, retrieves additional\ninformation from Wikipedia and arXiv, while also letting users view the AI’s step-by-step reasoning process.\nhttps://github.com/arjav0112/langchain_ai_agent\nAn AI-powered Telegram bot that, from a single user prompt, can send emails, schedule calendar events, create\ncontent, search the web, and manage contacts using integrations with Google Gemini, Gmail, Google Calendar,\nAirtable, and Tavily , watch a demo on my github repository.\nhttps://github.com/arjav0112/ultimate_Agent/\nTrained an RNN based Neural network , which translates text based movie review into ratings and tell if the review\nwas positive or negative\nhttps://traveller-0ycu.onrender.com/\nMarch 2023\n93.5%\nI’m a curious and motivated developer with a strong interest in Full Stack Development and Artificial Intelligence,\nespecially deep learning and neural networks. I enjoy solving complex problems and constantly sharpening my skills\nthrough competitive programming. My goal is to build smart, efficient software that makes a real impact. I’m excited to\nwork on meaningful projects where I can grow, collaborate with like-minded people, and bring together the best of system\ndesign and AI innovation.\nSelected from over 250+ teams and presented at Microsoft India Office.\nBuilt Aashwasan, an escrow-based freelance payment app focused on secure service agreements and conflict resolution.\nReceived appreciation for the app’s practical utility, UI execution, and problem-solving approach from industry judges\nrepresenting Microsoft, Blinkit, and others.\nAchievements\nTop 15 Finalist – Code Genesis Hackathon @ Microsoft Gurgaon \nFeb 2025\nJuly 2025\nleetcode.com/u/arjav_jain18",
+          "version": "5.3.31"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Resume Parser Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Resume Parser Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "resume-parser": {
+      "main": [
+        []
+      ]
+    },
+    "JD-parser": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "JD parser Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "JD parser Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resume Parser Agent": {
+      "main": [
+        [
+          {
+            "node": "resume-output",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "try again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JD parser Agent": {
+      "main": [
+        [
+          {
+            "node": "jd-output",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "try again1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "resume-output": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "jd-parser": {
+      "main": [
+        [
+          {
+            "node": "JD parser Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "resume-parser1": {
+      "main": [
+        [
+          {
+            "node": "Resume Parser Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Sentiment Anayliser",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sentiment Anayliser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Sentiment Anayliser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sentiment Anayliser": {
+      "main": [
+        [
+          {
+            "node": "json to string",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "try again2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Resume generator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Resume generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resume generator": {
+      "main": [
+        [
+          {
+            "node": "Html Layout",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "try again3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Html Layout": {
+      "main": [
+        [
+          {
+            "node": "html to pdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "json to string": {
+      "main": [
+        [
+          {
+            "node": "Resume generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Resume Parser Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Convert PDF into Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No resume found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Convert PDF into Text1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "no JD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Resume generator",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "JD parser Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "Sentiment Anayliser",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "html to pdf": {
+      "main": [
+        [
+          {
+            "node": "link to file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "link to file": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert PDF into Text": {
+      "main": [
+        [
+          {
+            "node": "resume-parser1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert PDF into Text1": {
+      "main": [
+        [
+          {
+            "node": "jd-parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "jd-output": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "96a0a0bb-e090-415b-9591-04eb0966e55f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f74d9bb8056f48fafc54ca846b41fe0f1c275ef0a91feff266bd833fb580baf0"
+  },
+  "id": "Rlk4uPLFZGqZ6sn5",
+  "tags": []
+}
